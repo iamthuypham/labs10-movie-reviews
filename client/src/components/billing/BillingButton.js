@@ -23,7 +23,7 @@ const stripeBtn = props => {
   };
   return (
     <StripeCheckout
-      label="Buy Now" //Component button text
+      label={props.buttonText} //Component button text
       name={props.header} //Modal Header
       description={props.priceTitle}
       panelLabel="Submit Payment" //Submit button in modal

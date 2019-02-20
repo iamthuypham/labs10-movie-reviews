@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Nav, NavLink, NavItem, Card, CardTitle, CardText, Button, CardHeader, CardBody, Badge } from 'reactstrap';
+import { Container, Row, Col, Nav, NavLink, NavItem, Card, CardTitle, CardText, CardHeader, CardBody, Spinner, Badge} from 'reactstrap';
 import './billing.css';
 import BillingButton from "./BillingButton";
 
@@ -7,17 +7,19 @@ const BillingView = () => {
 
   const subInfo = {
     oneYear: {
-      header: "Yearly Subscription",
+      header: "Year Subscription",
       priceTitle: "$9.99",
       totalCents: 999,
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      buttonText: "Buy Now"
     },
     oneMonth: {
-      header: " Monthly Subscription",
+      header: "Month Subscription",
       priceTitle: "$0.99",
       totalCents: 99,
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    }
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      buttonText: "Buy Now"
+    },
   }
     
   return (
@@ -43,14 +45,15 @@ const BillingView = () => {
             <Row>
               <Col sm="6">
                 <Card className="card">
-                  <CardHeader tag="h3">Yearly Subscription</CardHeader>
+                  <CardHeader tag="h3">{subInfo.oneYear.header}</CardHeader>
                   <CardBody>
-                    <CardTitle className="">$0.99</CardTitle>
-                    <CardText className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</CardText>
+                    <CardTitle className="">{subInfo.oneYear.priceTitle}</CardTitle>
+                    <CardText className="card-text">{subInfo.oneYear.description}</CardText>
                     <BillingButton 
                       header = {subInfo.oneYear.header}
                       priceTitle = {subInfo.oneYear.priceTitle}
                       totalCents = {subInfo.oneYear.totalCents}
+                      buttonText = {subInfo.oneYear.buttonText}
                     />
                   </CardBody>
                 </Card>
@@ -58,14 +61,15 @@ const BillingView = () => {
 
               <Col sm="6">
                 <Card className="sub-card">
-                  <CardHeader tag="h3">Monthly Subscription</CardHeader>
+                  <CardHeader tag="h3">{subInfo.oneMonth.header}</CardHeader>
                   <CardBody>
-                    <CardTitle>$9.99</CardTitle>
-                    <CardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</CardText>
+                    <CardTitle>{subInfo.oneMonth.priceTitle}</CardTitle>
+                    <CardText>{subInfo.oneMonth.description}</CardText>
                     <BillingButton 
                       header = {subInfo.oneMonth.header}
                       priceTitle = {subInfo.oneMonth.priceTitle}
                       totalCents = {subInfo.oneMonth.totalCents}
+                      buttonText = {subInfo.oneMonth.buttonText}
                     />
                   </CardBody>
                 </Card>
