@@ -1,0 +1,38 @@
+import React, { Fragment } from "react";
+import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
+
+const stripeBtn = () => {
+  const publishableKey = "pk_test_GAKbu7bXAJ5UZjNKNbWEe0XF";
+
+  const onToken = token => {
+    const body = {
+      amount: 999,
+      token: token
+  };
+  axios
+      .post("http://localhost:8000/payment", body)
+      .then(response => {
+        console.log(response);
+        alert("Payment Success");
+      })
+      .catch(error => {
+        console.log("Payment Error: ", error);
+        alert("Payment Error");
+      });
+  };
+  return (
+    <StripeCheckout
+      label="Buy Now" //Component button text
+      name="Paid Subscription" //Modal Header
+      description="Upgrade to a premium account today."
+      panelLabel="Go Premium" //Submit button in modal
+      amount={999} //Amount in cents $9.99
+      token={onToken}
+      stripeKey={publishableKey}
+      // image="https://www.vidhub.co" //Pop-in header image
+      billingAddress={false}
+    />
+  );
+};
+export default stripeBtn;
