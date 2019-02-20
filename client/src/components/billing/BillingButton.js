@@ -2,12 +2,12 @@ import React, { Fragment } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 
-const stripeBtn = () => {
+const stripeBtn = props => {
   const publishableKey = "pk_test_GAKbu7bXAJ5UZjNKNbWEe0XF";
 
   const onToken = token => {
     const body = {
-      amount: 999,
+      amount: props.totalCents,
       token: token
   };
   axios
@@ -24,10 +24,10 @@ const stripeBtn = () => {
   return (
     <StripeCheckout
       label="Buy Now" //Component button text
-      name="Paid Subscription" //Modal Header
-      description="Upgrade to a premium account today."
-      panelLabel="Go Premium" //Submit button in modal
-      amount={999} //Amount in cents $9.99
+      name={props.header} //Modal Header
+      description={props.priceTitle}
+      panelLabel="Submit Payment" //Submit button in modal
+      amount={props.totalCents} //Amount in cents $9.99
       token={onToken}
       stripeKey={publishableKey}
       // image="https://www.vidhub.co" //Pop-in header image
