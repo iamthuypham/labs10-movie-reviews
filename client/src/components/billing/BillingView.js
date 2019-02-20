@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Nav, NavLink, NavItem, Card, CardTitle, CardText, CardHeader, CardBody, Spinner, Badge} from 'reactstrap';
+import { Container, Row, Col, Nav, NavLink, NavItem, Card, CardTitle, CardText, CardHeader, CardBody } from 'reactstrap';
 import './billing.css';
 import BillingButton from "./BillingButton";
 
@@ -11,14 +11,14 @@ const BillingView = () => {
       priceTitle: "$9.99",
       totalCents: 999,
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      buttonText: "Buy Now"
+      buttonText: "Buy Now",
     },
     oneMonth: {
       header: "Month Subscription",
       priceTitle: "$0.99",
       totalCents: 99,
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      buttonText: "Buy Now"
+      buttonText: "Buy Now",
     },
   }
     
