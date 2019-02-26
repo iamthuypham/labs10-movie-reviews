@@ -15,7 +15,7 @@ router.post('/payment/', function(req, res) {
   const source = req.body.token.id; // stripe token created in the react app
   const { email } = req.body.token; // the customer's email
   let { plan } = req.body.plan; 
-  console.log("req.body", req.body);
+  // console.log("req.body", req.body);
 
   // the type of plan. either one year subscription or a one month subscription
   // This plan is a string was passed from the PremiumView component to the PayButton component. Then
