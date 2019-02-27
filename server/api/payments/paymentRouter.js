@@ -72,49 +72,7 @@ router.get('/customer/plan', function(req, res) {
   )
 })
 
-router.get('/customer/premium', function(req, res) {
-  console.log("customer req \n", req.headers);
-  const { stripeid } = req.headers
-  stripe.customers.retrieve(
-    stripeid,
-    function(err, customer) {
-      if (err) {
-        res.send({ 
-          error: "Unable to get customer"
-        })
-      } else {
-        console.log("customer /n", customer)
-        res.send({ 
-          premium: customer
-            .subscriptions
-            .data[0]
-            .items
-            .data[0]
-            .plan
-            .active     
-        })
-      }
-    }
-  )
-})
 
-router.get('/customer/delete', function(req, res) {
-  console.log("customer req \n", req.headers);
-  const { stripeid } = req.headers
-  stripe.customers.del(
-    stripeid,
-    function(err, confirmation) {
-      if (err) {
-        res.send({ error: "Unable to delete customer"})
-      } else {
-        console.log("confirmation /n", confirmation)
-        res.send({ 
-          message: "successsfully deleted customer"
-        })
-      }
-    }
-  )
-})
 
 
 
