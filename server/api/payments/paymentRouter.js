@@ -43,7 +43,7 @@ router.post('/payment', function(req, res) {
               ? res.send({ createdSubscription: false })
               : res.send({ 
                   createdSubscription: true, 
-                  stripeId: customer.id
+                  stripeId: customer.id-
                 })
           });
       })
@@ -58,7 +58,7 @@ router.get('/customer/plan', function(req, res) {
     function(err, customer) {
       if (customer.deleted) {
         res.send({ 
-          message: "This customer does not exist",
+          message: "No subscription found",
           premium: false
         })
         return;
@@ -87,6 +87,12 @@ router.get('/customer/premium', function(req, res) {
   stripe.customers.retrieve(
     stripeid,
     function(err, customer) {
+      if (customer.deleted) {
+        res.send({ 
+          premium: false
+        })
+        return;
+      }
       if (err) {
         res.send({ 
           error: "Unable to get customer"
@@ -107,7 +113,7 @@ router.get('/customer/premium', function(req, res) {
   )
 })
 
-
+// Deletes customer from stripe and cancled subscriptions
 router.get('/customer/delete', function(req, res) {
   console.log("customer req \n", req.headers);
   const { stripeid } = req.headers
