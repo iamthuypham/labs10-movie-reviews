@@ -10,13 +10,13 @@ const router = require('express').Router();
 // Our subscription's settings are already set up in the Stripe dashboard.
 // All we need to provide here is the customer ID and the type of sub
 
-const stripeChargeCallback = res => (stripeErr, stripeRes) => {
-  if (stripeErr) {
-    res.status(500).send({ error: stripeErr });
-  } else {
-    res.status(200).send({ success: stripeRes });
-  }
-};
+// const stripeChargeCallback = res => (stripeErr, stripeRes) => {
+//   if (stripeErr) {
+//     res.status(500).send({ error: stripeErr });
+//   } else {
+//     res.status(200).send({ success: stripeRes });
+//   }
+// };
 
 router.post('/payment/', function(req, res) {
   // we gather information from the request from our React app.
@@ -45,9 +45,17 @@ router.post('/payment/', function(req, res) {
           .create({ 
             customer: customer.id, 
             items: [{ plan }] // the value of plan is the id of the plan
-          }, stripeChargeCallback(res))
-    });
-});
+          }, (err, subscription) => {
+            // console.log('subscription \n', su`bscription);
+            err
+              ? res.send({ createdSubscription: false })
+              : res.send({ 
+                createdSubscription: true, 
+                stripeId: customer.id
+              })
+          });
+      })
+})
 
   // Leaving these payments for future use
   //! Payment method 2
