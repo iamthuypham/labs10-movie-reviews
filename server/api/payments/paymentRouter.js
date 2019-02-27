@@ -50,9 +50,9 @@ router.post('/payment/', function(req, res) {
             err
               ? res.send({ createdSubscription: false })
               : res.send({ 
-                createdSubscription: true, 
-                stripeId: customer.id
-              })
+                  createdSubscription: true, 
+                  stripeId: customer.id
+                })
           });
       })
 })
