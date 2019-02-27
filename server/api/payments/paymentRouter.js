@@ -49,16 +49,24 @@ router.post('/payment', function(req, res) {
       })
 })
 
+// Sends customer's plan using using stripeId
 router.get('/customer/plan', function(req, res) {
   console.log("customer req \n", req.headers);
   const { stripeid } = req.headers
   stripe.customers.retrieve(
     stripeid,
     function(err, customer) {
+      if (customer.deleted) {
+        res.send({ 
+          message: "This customer does not exist",
+          premium: false
+        })
+        return;
+      }
       if (err) {
         res.send({ error: "Unable to get customer"})
       } else {
-        console.log("customer /n", customer)
+        console.log("customer \n", customer)
         res.send({ 
           customer: customer
             .subscriptions
@@ -72,6 +80,7 @@ router.get('/customer/plan', function(req, res) {
   )
 })
 
+// Sends customer's status; "premium: true" if customer has active subscription
 router.get('/customer/premium', function(req, res) {
   console.log("customer req \n", req.headers);
   const { stripeid } = req.headers
@@ -92,6 +101,25 @@ router.get('/customer/premium', function(req, res) {
             .data[0]
             .plan
             .active     
+        })
+      }
+    }
+  )
+})
+
+
+router.get('/customer/delete', function(req, res) {
+  console.log("customer req \n", req.headers);
+  const { stripeid } = req.headers
+  stripe.customers.del(
+    stripeid,
+    function(err, confirmation) {
+      if (err) {
+        res.send({ error: "Unable to delete customer"})
+      } else {
+        console.log("confirmation /n", confirmation)
+        res.send({ 
+          message: "successsfully deleted customer"
         })
       }
     }
