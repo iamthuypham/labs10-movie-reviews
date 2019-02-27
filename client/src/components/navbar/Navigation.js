@@ -1,24 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
   NavbarToggler,
   Nav,
-  NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem 
+  DropdownItem
 } from 'reactstrap';
 
 import RenderLogin from './RenderLogin';
 import RenderDropdown from './RenderDropdown';
-import { login, logout } from '../../services/twitterURLs';
-import { ReactComponent as TwitterLogin } from '../../assets/svg/btn_twitter_1.svg';
+import { googleLogin, logout } from '../../services/authURLs';
+// import { ReactComponent as TwitterLogin } from '../../assets/svg/btn_twitter_1.svg';
+import GoogleLogin from '../../assets/svg/btn_google_1.png';
 import Search from './NavSearch';
-
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -42,36 +40,34 @@ export default class Navigation extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <Search 
-                  searchHandler={this.props.searchHandler}
-                  searchCriteria={this.props.searchCriteria}
-                  handleChange={this.props.handleChange}
-                />
+              <Search
+                searchHandler={this.props.searchHandler}
+                searchCriteria={this.props.searchCriteria}
+                handleChange={this.props.handleChange}
+              />
               <RenderLogin>
-                <a href={login}>
-                  <TwitterLogin />
+                <a href={googleLogin}>
+                  <img src={GoogleLogin} alt="Google Login" />
                 </a>
               </RenderLogin>
               <RenderDropdown>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>Profile</DropdownItem>
-                  <DropdownItem>
-                    <Link to="/myreviews">My Reviews</Link>
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Become a Premium Reviewer!
-                  </DropdownItem>
-                  <a href={logout}>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Options
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem>Profile</DropdownItem>
+                    <DropdownItem>
+                      <Link to="/myreviews">My Reviews</Link>
+                    </DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem>Become a Premium Reviewer!</DropdownItem>
+                    <a href={logout}>
                       <DropdownItem>Logout</DropdownItem>
-                  </a>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </RenderDropdown>
+                    </a>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </RenderDropdown>
             </Nav>
           </Collapse>
         </Navbar>
@@ -79,4 +75,3 @@ export default class Navigation extends React.Component {
     );
   }
 }
-

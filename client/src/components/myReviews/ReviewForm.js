@@ -1,6 +1,6 @@
 import React from 'react';
 
-const WriteReview = props => {
+const ReviewForm = props => {
   return (
     <form>
       <div className="form-div">
@@ -51,9 +51,17 @@ const WriteReview = props => {
         />
       </div>
 
-      <button className="write-btn" onClick={props.handleWriteNewReview} />
+      <button className="write-btn" onClick={props.handleWriteNewReview}>
+        Write Review
+      </button>
+      <button
+        className="material-button-raised"
+        onClick={props.handleEditReview}
+      >
+        Update Review
+      </button>
     </form>
   );
 };
 
-export default WriteReview;
+export default ReviewForm;
