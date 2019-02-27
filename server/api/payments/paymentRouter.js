@@ -10,16 +10,8 @@ const router = require('express').Router();
 // Our subscription's settings are already set up in the Stripe dashboard.
 // All we need to provide here is the customer ID and the type of sub
 
-// const stripeChargeCallback = res => (stripeErr, stripeRes) => {
-//   if (stripeErr) {
-//     res.status(500).send({ error: stripeErr });
-//   } else {
-//     res.status(200).send({ success: stripeRes });
-//   }
-// };
-
-router.post('/payment/', function(req, res) {
-  // we gather information from the request from our React app.
+router.post('/payment', function(req, res) {
+  // we gather information from the request body of our React app.
   const source = req.body.token.id; // stripe token created in the react app
   const { email } = req.body.token; // the customer's email
   let { plan } = req.body.plan; 
@@ -56,6 +48,78 @@ router.post('/payment/', function(req, res) {
           });
       })
 })
+
+router.get('/customer/plan', function(req, res) {
+  console.log("customer req \n", req.headers);
+  const { stripeid } = req.headers
+  stripe.customers.retrieve(
+    stripeid,
+    function(err, customer) {
+      if (err) {
+        res.send({ error: "Unable to get customer"})
+      } else {
+        console.log("customer /n", customer)
+        res.send({ 
+          customer: customer
+            .subscriptions
+            .data[0]
+            .items
+            .data[0]
+            .plan     
+        })
+      }
+    }
+  )
+})
+
+router.get('/customer/premium', function(req, res) {
+  console.log("customer req \n", req.headers);
+  const { stripeid } = req.headers
+  stripe.customers.retrieve(
+    stripeid,
+    function(err, customer) {
+      if (err) {
+        res.send({ 
+          error: "Unable to get customer"
+        })
+      } else {
+        console.log("customer /n", customer)
+        res.send({ 
+          premium: customer
+            .subscriptions
+            .data[0]
+            .items
+            .data[0]
+            .plan
+            .active     
+        })
+      }
+    }
+  )
+})
+
+router.get('/customer/delete', function(req, res) {
+  console.log("customer req \n", req.headers);
+  const { stripeid } = req.headers
+  stripe.customers.del(
+    stripeid,
+    function(err, confirmation) {
+      if (err) {
+        res.send({ error: "Unable to delete customer"})
+      } else {
+        console.log("confirmation /n", confirmation)
+        res.send({ 
+          message: "successsfully deleted customer"
+        })
+      }
+    }
+  )
+})
+
+
+
+
+
 
   // Leaving these payments for future use
   //! Payment method 2
