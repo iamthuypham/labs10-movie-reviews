@@ -18,16 +18,16 @@ const PayButton = props => {
     .then(stripeRes => {
       console.log("response", stripeRes.data.stripeId);
       axios
-        .get('http://localhost:5000/api/users/1')
+        .get('http://localhost:5000/api/users/2')
         .then(response => {
           console.log("response", response);
-          // axios
-          //   .put('http://localhost:5000/api/users/1', {
-          //     name: response.data.name,
-          //     email: response.data.email,
-          //     stripeId: stripeRes.data.stripeId
-          //   })
-          //   .catch(err => console.log("err \n", err))
+          axios
+            .put('http://localhost:5000/api/users/2', {
+              name: response.data.name,
+              email: response.data.email,
+              stripeId: stripeRes.data.stripeId
+            })
+            .catch(err => console.log("err \n", err))
         })   
     })
     .catch(error => {

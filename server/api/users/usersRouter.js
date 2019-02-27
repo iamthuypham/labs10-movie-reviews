@@ -32,7 +32,7 @@ router.get('/users/:id', async (req, res) => {
 
 // POST request to add a user
 router.post('/users', async (req, res) => {
-  if (req.body.name && req.body.username && req.body.email) {
+  if (req.body.name && req.body.email) {
     try {
       await usersDb.insert(req.body);
       res.status(201).json({ message: 'User successfully added!' });
