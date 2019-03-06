@@ -7,3 +7,6 @@ command = "yarn build"
 from = "/*"
 to = "/index.html"
 status = 200
+
+[context.pts.environment]
+  
