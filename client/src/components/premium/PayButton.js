@@ -14,13 +14,16 @@ class PayButton extends Component {
       email: '',
       username: '',
       stripeId: '',
+      googleId: '',
     }
   }
 
   componentDidMount = async () => {
+    console.log("anything")
     const res = await axios.get(currentUser, {
       withCredentials: true
     });
+    console.log("res", res)
     if (res.data) {
       // console.log("res.data \n", res.data)
       this.setState({
@@ -28,6 +31,7 @@ class PayButton extends Component {
         name: res.data.name,
         email: res.data.email,
         username: res.data.username,
+        googleId: res.data.googleId
       });
     }
   }
@@ -49,8 +53,10 @@ class PayButton extends Component {
       })
       .then(response => {
         // console.log("resonse put \n", response);
+        console.log("google ID\n ", this.state.googleId);
         axios
-          .put(`https://labs10-movie-reviews.herokuapp.com/api/users/${this.state.id}`, {
+          .put(`https://labs10-movie-reviews.herokuapp.com/api/users/${this.state.googleId}`, {
+            id: this.state.id,
             name: this.state.name,
             email: this.state.email,
             // username: this.state.name,

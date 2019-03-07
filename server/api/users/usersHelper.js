@@ -27,7 +27,7 @@ module.exports = {
     if (debugging === true)
       console.log('PUT Users Helper', '\nid:', id, 'user:', user);
     return db('users')
-      .where('id', id)
+      .where({ googleId: id })
       .update(user);
   },
   // Delete User
@@ -36,5 +36,8 @@ module.exports = {
     return db('users')
       .where('id', id)
       .del();
+  },
+  getUserByGoogleId: function(id) {
+    return db('users').where({ googleId: id})
   }
 };

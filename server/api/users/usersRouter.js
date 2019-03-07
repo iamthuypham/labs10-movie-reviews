@@ -15,9 +15,17 @@ router.get('/users', async (req, res) => {
 
 // GET request that gets a user by id
 router.get('/users/:id', async (req, res) => {
+  console.log("anything")
   const { id } = req.params;
-  const user = await usersDb.getUsersById(id);
-  res.json(user);
+  console.log(id)
+  // const user = await usersDb.getUsersById(id);
+  const googleUser = await usersDb.getUserByGoogleId(id);
+  if (googleUser) {
+    res.status(200).json({ googleUser: googleUser[0] })
+  }
+  res.status(500).json({
+    message: "not defined"
+  })
 });
 
 // POST request to add a user
@@ -50,15 +58,18 @@ router.put('/users/:id', async (req, res) => {
   const changes = req.body;
   const { id } = req.params;
   if (req.body.name && req.body.email && req.body.stripeId) {
+    console.log('anything')
     try {
       const count = await usersDb.update(id, changes);
       //count is the number of records updated
+      console.log("count", count);
       if (count) {
-        const user = await usersDb.get(id);
+        const user = await usersDb.getUserByGoogleId(id);
         res.status(200).json(user);
       } else
         res.status(404).json({ Error: `User with ID ${id} does not exist.` });
     } catch (err) {
+      console.log("70", err)
       res.status(500).json(err);
     }
   } else
